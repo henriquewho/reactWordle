@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/reactWordle/static/js/main.86d94d02.js",
+    "index.html": "/reactWordle/index.html",
+    "main.86d94d02.js.map": "/reactWordle/static/js/main.86d94d02.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.86d94d02.js"
+  ]
+}
