@@ -1,0 +1,100 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+@mixin under600 {
+    @media (max-width: 600px) {
+        @content
+    }
+}
+
+@mixin under480 {
+    @media (max-width: 480px) {
+        @content
+    }
+}
+
+@mixin height1 {
+    @media (max-height: 700px) {
+        @content
+    }
+}
+
+// Main page with the login form
+
+.main-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .login-page {
+        padding-top: 10%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+
+        .login-card {
+            background-color: rgb(232, 253, 232);
+            background-color: rgb(212, 212, 245);
+            color: #333; 
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            padding: 25px; 
+            margin: 10px;
+            margin-top: 15%; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-items: center;
+            width: 300px;
+
+            @include under600 {
+                transform: scale(0.9);
+            }
+
+            input {
+                padding: 1rem; 
+                border-radius: 25px;
+                border: none; 
+                background-color: white;
+                font-family: inherit;
+                box-shadow: 0 2px rgba(230, 12, 12, 0.2);
+                width: 100%;
+                font-size: 1rem;
+                margin-bottom: 10px;
+
+                &focus{
+                    outline: none;
+                }
+            }
+
+            button {
+                background-color: rgb(126, 126, 212);
+                color: black;
+                border-radius: 20px;
+                border: none; 
+                padding: 10px; 
+                margin: 20px;
+                height: 50px;
+                width: 80%;
+                text-align: center;
+                text-justify: center;
+                font-weight: 400;
+                font-size: 1.0rem;
+            
+                &:hover {
+                    transform: scale(0.98);
+                    cursor: pointer;
+                }
+            
+                &:active {
+                    background-color: rgb(163, 163, 241);
+                }
+            }
+            
+        }
+    }
+}
