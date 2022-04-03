@@ -1,12 +1,20 @@
 import React, {useState} from 'react'; 
 import './scss/App.scss'; 
+import io from 'socket.io-client'
+import { generateWordSet } from './Words';
 
 import Game from './components/Game';
+
+//const socket = io.connect("https://radiant-inlet-61531.herokuapp.com/"); 
+const socket = io.connect("http://localhost:3004"); 
 
 function App() {
     const [logged, setLogged] = useState(false); 
     const [username, setUsername] = useState('')
     const [room, setRoom] = useState('')
+
+    const [wordSet, setWordSet] = useState(new Set()); 
+    const [correctWord, setCorrectWord] = useState('');
 
     const joinRoom = () => {
         if (username.length===0 || room.length===0) {
@@ -15,8 +23,15 @@ function App() {
         } else if (username.includes(' ') || room.includes(' ')) {
             alert('Name and Room must not have a space'); 
             return; 
+        } else {
+            generateWordSet().then(resp => {
+                setWordSet(resp.wordSet);
+                setCorrectWord(resp.todaysWord.toUpperCase());
+                socket.emit('join', {room, word: resp.todaysWord.toUpperCase()}); 
+                setLogged(true); 
+                console.log('todays word: ', resp.todaysWord)
+            })
         }
-        setLogged(true); 
     }
 
     return (
@@ -35,7 +50,7 @@ function App() {
                     </div>
                 </div>
                 : 
-                <Game />
+                <Game wordSet={wordSet} correctWord={correctWord}/>
             }
         </div>
         </>
