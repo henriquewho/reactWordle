@@ -9,7 +9,7 @@ function Keyboard() {
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
     const keys3 = ["Z", "X", "C", "V", "B", "N", "M"];
 
-    const handleKeyboard = e => {
+    const handleKeyboard = useCallback(e=>{
         if (e.key==='Enter') {
             onEnter(); 
         } else if (e.key === 'Backspace') {
@@ -20,7 +20,7 @@ function Keyboard() {
                 if (e.key.toUpperCase() === each) onSelectLetter(each); 
             })
         }
-    }
+    })
 
     useEffect (()=>{
         document.addEventListener('keydown', handleKeyboard)

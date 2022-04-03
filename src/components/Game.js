@@ -10,6 +10,7 @@ function Game() {
     const [currAttempt, setCurrAttempt] = useState({
         attempt: 0, letterPos: 0
     })
+    const correctWord = 'RIGHT'; 
 
     const onSelectLetter = (keyVal) => {
         if (currAttempt.letterPos > 4) return; 
@@ -47,7 +48,7 @@ function Game() {
     return (
         <div className='game'>
             <GameContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt,
-            onSelectLetter, onDelete, onEnter}}>
+            onSelectLetter, onDelete, onEnter, correctWord}}>
                 <Board /> 
                 <Keyboard /> 
             </GameContext.Provider>
