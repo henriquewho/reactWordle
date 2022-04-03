@@ -1,7 +1,7 @@
 import React, {useState, createContext, useEffect} from 'react'
 import Board from './Board'
 import Keyboard from './Keyboard'
-import { boardDefault, generateWordSet } from '../Words';
+import { boardDefault } from '../util/Words';
 import GameOver from './GameOver';
 import Navbar from './Navbar';
 
@@ -19,16 +19,6 @@ function Game({wordSet, correctWord}) {
     const [navbar, setNavbar] = useState({
         msg: 'Hello', id: 'navbar-login'
     })
-
-    /* 
-    useEffect(()=>{
-        generateWordSet().then(resp => {
-            setWordSet(resp.wordSet);
-            setCorrectWord(resp.todaysWord.toUpperCase());
-            console.log(resp.todaysWord)
-        })
-    }, [])
-    */
 
     const onSelectLetter = (keyVal) => {
         if (currAttempt.letterPos > 4) return; 

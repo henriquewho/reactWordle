@@ -1,7 +1,7 @@
 import React, {useState} from 'react'; 
 import './scss/App.scss'; 
 import io from 'socket.io-client'
-import { generateWordSet } from './Words';
+import { generateWordSet } from './util/Words';
 
 import Game from './components/Game';
 
