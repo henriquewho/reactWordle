@@ -1,6 +1,8 @@
 import React, {useState} from 'react'; 
 import './scss/App.scss'; 
 
+import Game from './components/Game';
+
 function App() {
     const [logged, setLogged] = useState(false); 
 
@@ -20,7 +22,7 @@ function App() {
                     </div>
                 </div>
                 : 
-                'the game'
+                <Game />
             }
         </div>
     )
