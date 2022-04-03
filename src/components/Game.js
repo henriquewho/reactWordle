@@ -9,7 +9,7 @@ function Game() {
     const [board, setBoard] = useState(boardDefault);
 
     return (
-        <div>
+        <div className='game'>
             <GameContext.Provider value={{board, setBoard}}>
                 <Board /> 
                 <Keyboard /> 
