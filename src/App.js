@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './scss/App.scss'; 
 
 import Game from './components/Game';
+import Navbar from './components/Navbar';
 
 function App() {
     const [logged, setLogged] = useState(false); 
@@ -19,22 +20,30 @@ function App() {
         setLogged(true); 
     }
 
+    const navbar = {
+        msg: 'Multiplayer Wordle', id: 'navbar-login'
+    }
+
     return (
+        <>
         <div className='main-app'>
             {
                 (logged===false) ? 
-                <div className='login-page'>
-                    <h1>Multiplayer Wordle</h1>
-                    <div className='login-card'>
-                        <input type='text' placeholder='name...' onChange={e=>setUsername(e.target.value)} value={username}></input>
-                        <input type='text' placeholder='room name...' onChange={e=>setRoom(e.target.value)} value={room}></input>
-                        <button onClick={joinRoom}>Create or Join a game</button>
+                <div>
+                    <nav>Multiplayer Wordle</nav>
+                    <div className='login-page'>
+                        <div className='login-card'>
+                            <input type='text' placeholder='name...' onChange={e=>setUsername(e.target.value)} value={username}></input>
+                            <input type='text' placeholder='room name...' onChange={e=>setRoom(e.target.value)} value={room}></input>
+                            <button onClick={joinRoom}>Create or Join a game</button>
+                        </div>
                     </div>
                 </div>
                 : 
                 <Game />
             }
         </div>
+        </>
     )
 }
 

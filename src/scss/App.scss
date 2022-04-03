@@ -35,7 +35,7 @@ $secondary-color: rgb(166, 166, 243);
     align-items: center;
 
     .login-page {
-        padding-top: 10%;
+        //padding-top: 10%;
         display: flex;
         flex-direction: column;
         text-align: center;
@@ -111,6 +111,35 @@ $secondary-color: rgb(166, 166, 243);
     }
 }
 
+// Navbar 
+
+nav {
+    width: 100%;
+    height: 50px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem; 
+    color: black; 
+    background-color: rgb(212 ,212, 245);
+}
+
+.navbar {
+    position: fixed; 
+    top: 0; 
+    width: 100%;
+    height: 50px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem; 
+    color: black; 
+}
+
+#navbar-login {
+    background-color: rgb(212 ,212, 245);
+}
+
 // Game
 
 .main-game {
@@ -126,22 +155,6 @@ body {
     margin: 0;
 }
 
-nav {
-    background-color: $secondary-color;
-    color: white; 
-    height: 50px;
-    width: 100%;
-    margin: 0;
-    border-bottom: 1px solid grey;
-    display: grid;
-    place-items: center;
-
-    h1 {
-        color: white; 
-        font-size: 2rem; 
-    }
-}
-
 .game {
     width: 100vw;
     height: calc(100vh - 170px);
@@ -152,6 +165,7 @@ nav {
 }
 
 .board {
+    margin-top: 4%;
     //width: 450px;
     width: 350px;
     //height: 550px;
@@ -160,9 +174,6 @@ nav {
     flex-direction: column;
 
     @include under480 {
-        transform: scale(0.8);
-    }
-    @include height1 {
         transform: scale(0.8);
     }
 }
@@ -204,18 +215,14 @@ nav {
 }
 
 .keyboard {
-    width: 550px;
-    height: 200px;
-    margin-top: 60px;
+    position: fixed; 
+    bottom: 0; 
 
     @include under600 {
         transform: scale(0.8);
     }
     @include under480 {
         transform: scale(0.6);
-    }
-    @include height1 {
-        transform: scale(0.8);
     }
 }
 

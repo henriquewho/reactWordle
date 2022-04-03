@@ -3,6 +3,7 @@ import Board from './Board'
 import Keyboard from './Keyboard'
 import { boardDefault, generateWordSet } from '../Words';
 import GameOver from './GameOver';
+import Navbar from './Navbar';
 
 export const GameContext = createContext(); 
 
@@ -17,6 +18,9 @@ function Game() {
     const [gameOver, setGameOver] = useState({
         gameOver: false, guessedWord: false
     }); 
+    const [navbar, setNavbar] = useState({
+        msg: 'Hello', id: 'navbar-login'
+    })
 
     useEffect(()=>{
         generateWordSet().then(resp => {
@@ -86,6 +90,7 @@ function Game() {
             <GameContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt,
             onSelectLetter, onDelete, onEnter, correctWord, 
             disabledLetters, setDisabledLetters, gameOver, setGameOver}}>
+                <Navbar navbar={navbar}/>
                 <Board /> 
                 {
                     (gameOver.gameOver) ?
