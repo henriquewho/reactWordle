@@ -29,7 +29,7 @@ function Game({wordSet, correctWord}) {
         })
     }, [])
     */
-   
+
     const onSelectLetter = (keyVal) => {
         if (currAttempt.letterPos > 4) return; 
         const newBoard = [...board]; 
@@ -68,7 +68,9 @@ function Game({wordSet, correctWord}) {
                 }
             })
         } else {
-            console.log('word dont exist')
+            setNavbar({
+                msg: 'Invalid word!', id: 'navbar-invalid'
+            })
             return; 
         }
 
