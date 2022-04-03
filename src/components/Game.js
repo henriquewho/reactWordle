@@ -22,6 +22,7 @@ function Game() {
         generateWordSet().then(resp => {
             setWordSet(resp.wordSet);
             setCorrectWord(resp.todaysWord.toUpperCase());
+            console.log(resp.todaysWord)
         })
     }, [])
 
@@ -64,6 +65,7 @@ function Game() {
             })
         } else {
             console.log('word dont exist')
+            return; 
         }
 
         if (currWord === correctWord) {

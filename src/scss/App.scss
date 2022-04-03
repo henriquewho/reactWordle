@@ -40,8 +40,13 @@ $secondary-color: rgb(166, 166, 243);
         flex-direction: column;
         text-align: center;
         justify-content: center;
+        align-items: center;
 
-
+        h1 {
+            font-size: 3.5rem;
+            background-color: rgb(168, 168, 219);
+            color: white;
+        }
 
         .login-card {
             background-color: rgb(232, 253, 232);
