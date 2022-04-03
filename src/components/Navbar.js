@@ -2,7 +2,7 @@ import React from 'react'
 
 function Navbar({navbar}) {
     return (
-        <nav className='navbar' id={navbar.id}>{navbar.msg}</nav>
+        <div className='navbar' id={navbar.id}>{navbar.msg}</div>
     )
 }
 
