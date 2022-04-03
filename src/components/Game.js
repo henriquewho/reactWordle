@@ -1,16 +1,23 @@
-import React, {useState, createContext} from 'react'
+import React, {useState, createContext, useEffect} from 'react'
 import Board from './Board'
 import Keyboard from './Keyboard'
-import { boardDefault } from '../Words';
+import { boardDefault, generateWordSet } from '../Words';
 
 export const GameContext = createContext(); 
 
 function Game() {
+    const [wordSet, setWordSet] = useState(new Set())
     const [board, setBoard] = useState(boardDefault);
     const [currAttempt, setCurrAttempt] = useState({
         attempt: 0, letterPos: 0
     })
     const correctWord = 'RIGHT'; 
+
+    useEffect(()=>{
+        generateWordSet().then(resp => {
+            setWordSet(resp.wordSet);
+        })
+    }, [])
 
     const onSelectLetter = (keyVal) => {
         if (currAttempt.letterPos > 4) return; 
