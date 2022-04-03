@@ -12,6 +12,9 @@ function App() {
         if (username.length===0 || room.length===0) {
             alert('Name and Room must be informed');
             return; 
+        } else if (username.includes(' ') || room.includes(' ')) {
+            alert('Name and Room must not have a space'); 
+            return; 
         }
         setLogged(true); 
     }
