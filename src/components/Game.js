@@ -12,6 +12,7 @@ function Game() {
         attempt: 0, letterPos: 0
     })
     const correctWord = 'RIGHT'; 
+    const [disabledLetters, setDisabledLetters] = useState([]); 
 
     useEffect(()=>{
         generateWordSet().then(resp => {
@@ -60,13 +61,18 @@ function Game() {
             console.log('word dont exist')
         }
 
+        if (currWord === correctWord) {
+            console.log('won'); 
+        }
+
         
     }
 
     return (
         <div className='game'>
             <GameContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt,
-            onSelectLetter, onDelete, onEnter, correctWord}}>
+            onSelectLetter, onDelete, onEnter, correctWord, 
+            disabledLetters, setDisabledLetters}}>
                 <Board /> 
                 <Keyboard /> 
             </GameContext.Provider>

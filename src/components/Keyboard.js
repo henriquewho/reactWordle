@@ -3,7 +3,8 @@ import Key from './Key';
 import {GameContext} from './Game'
 
 function Keyboard() {
-    const {onEnter, onDelete, onSelectLetter} = useContext(GameContext); 
+    const {onEnter, onDelete, onSelectLetter, 
+    disabledLetters} = useContext(GameContext); 
 
     const keys1 = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const keys2 = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
@@ -34,18 +35,21 @@ function Keyboard() {
         <div className='keyboard' onKeyDown={handleKeyboard}>
             <div className='line1'>
                 {keys1.map((each, index) => {
-                    return <Key key={index} keyVal={each}/>
+                    return <Key key={index} keyVal={each}
+                    disabled={disabledLetters.includes(each)}/>
                 })}
             </div>
             <div className='line2'>
                 {keys2.map((each, index) => {
-                    return <Key key={index} keyVal={each}/>
+                    return <Key key={index} keyVal={each}
+                    disabled={disabledLetters.includes(each)}/>
                 })}
             </div>
             <div className='line3'>
                 <Key keyVal={'ENTER'}/>
                 {keys3.map((each, index) => {
-                    return <Key key={index} keyVal={each}/>
+                    return <Key key={index} keyVal={each}
+                    disabled={disabledLetters.includes(each)}/>
                 })}
                 <Key keyVal={'DEL'}/>
             </div>

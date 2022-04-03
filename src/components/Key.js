@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import { GameContext } from './Game'
 
-function Key({keyVal}) {
+function Key({keyVal, disabled}) {
     const {onDelete, onEnter, onSelectLetter} = useContext(GameContext); 
 
     const selectLetter = () => {
@@ -12,9 +12,11 @@ function Key({keyVal}) {
         } else onSelectLetter(keyVal); 
     }
 
+    const keyId = (keyVal==='ENTER' || keyVal==='DEL') ? 'big': disabled ? 'disabled': '';
+
     return (
         <div className='key' onClick={selectLetter}
-        id={(keyVal==='ENTER' || keyVal==='DEL') ? 'big':''}>{keyVal}
+        id={keyId}>{keyVal}
         </div>
     )
 }
