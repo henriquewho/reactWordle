@@ -45,11 +45,22 @@ function Game() {
 
     const onEnter = () => {
         if (currAttempt.letterPos !== 5) return; 
-        setCurrAttempt((prev) => {
-            return {
-                attempt: prev.attempt+1, letterPos: 0
-            }
-        })
+
+        let currWord = ''; 
+        for (let i=0; i<5; i++){
+            currWord += board[currAttempt.attempt][i]; 
+        }
+        if (wordSet.has(currWord.toLowerCase())) {
+            setCurrAttempt((prev) => {
+                return {
+                    attempt: prev.attempt+1, letterPos: 0
+                }
+            })
+        } else {
+            console.log('word dont exist')
+        }
+
+        
     }
 
     return (
