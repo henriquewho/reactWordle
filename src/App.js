@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './scss/App.scss'; 
 
 import Game from './components/Game';
-import Navbar from './components/Navbar';
 
 function App() {
     const [logged, setLogged] = useState(false); 
@@ -18,10 +17,6 @@ function App() {
             return; 
         }
         setLogged(true); 
-    }
-
-    const navbar = {
-        msg: 'Multiplayer Wordle', id: 'navbar-login'
     }
 
     return (
