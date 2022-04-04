@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 
 export const GameContext = createContext(); 
 
-function Game({wordSet, correctWord}) {
+function Game({wordSet, correctWord, socket, setCorrectWord, room}) {
     const [board, setBoard] = useState(boardDefault);
     const [currAttempt, setCurrAttempt] = useState({
         attempt: 0, letterPos: 0
@@ -19,6 +19,27 @@ function Game({wordSet, correctWord}) {
     const [navbar, setNavbar] = useState({
         msg: 'Hello', id: 'navbar-login'
     })
+
+    /* This useEffect runs every time the socket is changed, IOW, when a message is sent or 
+    received via the backend configured for the variable 'socket'.
+    */
+    useEffect(()=>{
+        /* This message is sent BY THE SERVER when / if:  
+        - A player logged in, and it's the second player who logged. */
+        socket.on('receiveOtherPlayer', (data)=>{
+            socket.emit('setCorrectWord', {
+                correctWord, room
+            })
+        })
+
+        /* Only the player1 will get the 'receiveOtherPlayer' message. When it happens, player1 will
+        send the correct word to the backend, which will send it to the event below, so that player2 can
+        play on the same word as player1. 
+        */
+        socket.on('setCorrectWord', (data)=>{
+            setCorrectWord(data.correctWord); 
+        })
+    }, [socket])
 
     const onSelectLetter = (keyVal) => {
         if (currAttempt.letterPos > 4) return; 

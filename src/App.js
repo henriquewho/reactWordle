@@ -54,7 +54,8 @@ function App() {
                     </div>
                 </div>
                 : 
-                <Game wordSet={wordSet} correctWord={correctWord}/>
+                <Game wordSet={wordSet} correctWord={correctWord}
+                socket={socket} room={room} setCorrectWord={setCorrectWord}/>
             }
         </div>
         </>
