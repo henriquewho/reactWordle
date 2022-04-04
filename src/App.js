@@ -5,8 +5,8 @@ import { generateWordSet } from './util/Words';
 
 import Game from './components/Game';
 
-//const socket = io.connect("https://radiant-inlet-61531.herokuapp.com/"); 
-const socket = io.connect("http://localhost:3004"); 
+const socket = io.connect("https://radiant-inlet-61531.herokuapp.com/"); 
+//const socket = io.connect("http://localhost:3004"); 
 
 function App() {
     const [logged, setLogged] = useState(false); 
@@ -28,7 +28,7 @@ function App() {
             generateWordSet().then(resp => {
                 setWordSet(resp.wordSet);
                 setCorrectWord(resp.todaysWord.toUpperCase());
-                socket.emit('join', {room, word: resp.todaysWord.toUpperCase()}); 
+                socket.emit('join', {username, room, word: resp.todaysWord.toUpperCase()}); 
                 setLogged(true); 
                 console.log('todays word: ', resp.todaysWord)
             })
@@ -54,7 +54,7 @@ function App() {
                     </div>
                 </div>
                 : 
-                <Game wordSet={wordSet} correctWord={correctWord}
+                <Game wordSet={wordSet} correctWord={correctWord} username={username}
                 socket={socket} room={room} setCorrectWord={setCorrectWord}/>
             }
         </div>

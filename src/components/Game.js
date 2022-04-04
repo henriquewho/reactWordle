@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 
 export const GameContext = createContext(); 
 
-function Game({wordSet, correctWord, socket, setCorrectWord, room}) {
+function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
     const [board, setBoard] = useState(boardDefault);
     const [currAttempt, setCurrAttempt] = useState({
         attempt: 0, letterPos: 0
@@ -17,7 +17,7 @@ function Game({wordSet, correctWord, socket, setCorrectWord, room}) {
         gameOver: false, guessedWord: false
     }); 
     const [navbar, setNavbar] = useState({
-        msg: 'Hello', id: 'navbar-login'
+        msg: 'Waiting for the other player to join...', id: 'navbar-invalid', state: 'wait-join'
     })
 
     /* This useEffect runs every time the socket is changed, IOW, when a message is sent or 
@@ -28,7 +28,10 @@ function Game({wordSet, correctWord, socket, setCorrectWord, room}) {
         - A player logged in, and it's the second player who logged. */
         socket.on('receiveOtherPlayer', (data)=>{
             socket.emit('setCorrectWord', {
-                correctWord, room
+                correctWord, room, username
+            })
+            setNavbar({
+                msg: `${data.username} joined, you can guess now!`, id: 'navbar-login', state: 'play'
             })
         })
 
@@ -38,6 +41,9 @@ function Game({wordSet, correctWord, socket, setCorrectWord, room}) {
         */
         socket.on('setCorrectWord', (data)=>{
             setCorrectWord(data.correctWord); 
+            setNavbar({
+                msg: `Waiting for ${data.username} to play...`, id: 'navbar-invalid', state: 'wait-play'
+            })
         })
     }, [socket])
 
