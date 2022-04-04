@@ -16,7 +16,8 @@ function App() {
     const [wordSet, setWordSet] = useState(new Set()); 
     const [correctWord, setCorrectWord] = useState('');
 
-    const joinRoom = () => {
+    const joinRoom = e => {
+        e.preventDefault(); 
         if (username.length===0 || room.length===0) {
             alert('Name and Room must be informed');
             return; 
@@ -43,9 +44,12 @@ function App() {
                     <nav>Multiplayer Wordle</nav>
                     <div className='login-page'>
                         <div className='login-card'>
-                            <input type='text' placeholder='name...' onChange={e=>setUsername(e.target.value)} value={username}></input>
-                            <input type='text' placeholder='room name...' onChange={e=>setRoom(e.target.value)} value={room}></input>
-                            <button onClick={joinRoom}>Create or Join a game</button>
+                            <form onSubmit={joinRoom}>
+                                <input type='text' placeholder='name...' onChange={e=>setUsername(e.target.value)} value={username}></input>
+                                <input type='text' placeholder='room name...' onChange={e=>setRoom(e.target.value)} value={room}></input>
+                                <button onClick={joinRoom}>Create or Join a game</button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
