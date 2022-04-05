@@ -9,6 +9,9 @@ export const GameContext = createContext();
 
 function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
     const [board, setBoard] = useState(boardDefault);
+    const [generalAttempt, setGeneralAttempt] = useState({
+        attempt: 0
+    })
     const [currAttempt, setCurrAttempt] = useState({
         attempt: 0, letterPos: 0
     }); 
@@ -45,6 +48,18 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
                 msg: `Waiting for ${data.username} to play...`, id: 'navbar-invalid', state: 'wait-play'
             })
         })
+
+        /* When the other player sets a new word in the board, the generalAttempt state should be 
+        updated to a new value, increasing one 'try'. 
+        */
+        socket.on('receive-update-attempt', (data)=>{
+            console.log('receive-update-attempt')
+            setGeneralAttempt((prev) => {
+                return {
+                    attempt: prev.attempt+1
+                }
+            })
+        })
     }, [socket])
 
     const onSelectLetter = (keyVal) => {
@@ -79,6 +94,20 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             currWord += board[currAttempt.attempt][i]; 
         }
         if (wordSet.has(currWord.toLowerCase())) {
+            /* When player A make a guess, player B should receive the update-attempt to increase the 
+            generalAttempt state and then set its own generalAttempt so that the value is the same 
+            on both sides
+            */
+            socket.emit('update-attempt', {
+                attempt: generalAttempt.attempt+1, room
+            })
+            setGeneralAttempt(prev => {
+                console.log('setGeneralAttempt')
+                return {
+                    attempt: prev.attempt+1
+                }
+            })
+
             setCurrAttempt((prev) => {
                 return {
                     attempt: prev.attempt+1, letterPos: 0
@@ -110,6 +139,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             onSelectLetter, onDelete, onEnter, correctWord, 
             disabledLetters, setDisabledLetters, gameOver, setGameOver}}>
                 <Navbar navbar={navbar}/>
+                <button onClick={()=>console.log('generalAttempt: ', generalAttempt)}>generalAttempt</button>
                 <Board /> 
                 {
                     (gameOver.gameOver) ?
