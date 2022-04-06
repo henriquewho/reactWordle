@@ -8,6 +8,7 @@ import Navbar from './Navbar';
 export const GameContext = createContext(); 
 
 function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
+    const [otherPlayer, setOtherPlayer] = useState(''); 
     const [board, setBoard] = useState(boardDefault);
     const [generalAttempt, setGeneralAttempt] = useState({
         attempt: 0
@@ -30,6 +31,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
         /* This message is sent BY THE SERVER when / if:  
         - A player logged in, and it's the second player who logged. */
         socket.on('receiveOtherPlayer', (data)=>{
+            setOtherPlayer(data.username)
             socket.emit('setCorrectWord', {
                 correctWord, room, username
             })
@@ -43,6 +45,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
         play on the same word as player1. 
         */
         socket.on('setCorrectWord', (data)=>{
+            setOtherPlayer(data.username)
             setCorrectWord(data.correctWord); 
             setNavbar({
                 msg: `Waiting for ${data.username} to play...`, id: 'navbar-invalid', state: 'wait-play'
@@ -58,6 +61,9 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
                 return {
                     attempt: prev.attempt+1
                 }
+            })
+            setNavbar({
+                msg: `${data.username} guessed, you can guess now!`, id: 'navbar-login', state: 'play'
             })
         })
     }, [socket])
@@ -99,13 +105,16 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             on both sides
             */
             socket.emit('update-attempt', {
-                attempt: generalAttempt.attempt+1, room
+                attempt: generalAttempt.attempt+1, room, username
             })
             setGeneralAttempt(prev => {
                 console.log('setGeneralAttempt')
                 return {
                     attempt: prev.attempt+1
                 }
+            })
+            setNavbar({
+                msg: `Waiting for ${otherPlayer} to guess...`, id: 'navbar-invalid', state: 'wait-join'
             })
 
             setCurrAttempt((prev) => {
@@ -139,7 +148,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             onSelectLetter, onDelete, onEnter, correctWord, 
             disabledLetters, setDisabledLetters, gameOver, setGameOver}}>
                 <Navbar navbar={navbar}/>
-                <button onClick={()=>console.log('generalAttempt: ', generalAttempt)}>generalAttempt</button>
+                <button onClick={()=>console.log(otherPlayer)}>test</button>
                 <Board /> 
                 {
                     (gameOver.gameOver) ?
