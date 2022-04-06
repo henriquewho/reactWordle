@@ -32,7 +32,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
         - A player logged in, and it's the second player who logged. */
         socket.on('receiveOtherPlayer', (data)=>{
             setOtherPlayer(data.username)
-            socket.emit('setCorrectWord', {
+                socket.emit('setCorrectWord', {
                 correctWord, room, username
             })
             setNavbar({
@@ -64,6 +64,14 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             })
             setNavbar({
                 msg: `${data.username} guessed, you can guess now!`, id: 'navbar-login', state: 'play'
+            })
+        })
+
+        /* Sets the end of the game when the other player has won it
+        */
+        socket.on('wonGame', (data)=>{
+            setNavbar({
+                msg: `${data.username} has won the game :( The word is ${data.correctWord}`, id: 'navbar-error', state: 'end-game'
             })
         })
     }, [socket])
@@ -130,8 +138,16 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
         }
 
         if (currWord === correctWord) {
+            /* Sets the end of the game when the current player has won it, and sends the 
+            message to the other side */
             setGameOver({
                 gameOver: true, guessedWord: true
+            })
+            setNavbar({
+                msg: `You have won the game, congrats!`, id: 'navbar-won', state: 'end-game'
+            })
+            socket.emit('wonGame', {
+                room, correctWord, username
             })
             return; 
         }
@@ -148,7 +164,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             onSelectLetter, onDelete, onEnter, correctWord, 
             disabledLetters, setDisabledLetters, gameOver, setGameOver}}>
                 <Navbar navbar={navbar}/>
-                <button onClick={()=>console.log(otherPlayer)}>test</button>
+                <button onClick={()=>console.log(correctWord)}>test</button>
                 <Board /> 
                 {
                     (gameOver.gameOver) ?
