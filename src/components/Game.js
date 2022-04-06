@@ -56,7 +56,21 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
         updated to a new value, increasing one 'try'. 
         */
         socket.on('receive-update-attempt', (data)=>{
-            console.log('receive-update-attempt')
+            console.log('receive-update-attempt', data)
+            setBoard(prev => {
+                for (let i=0; i<6; i++) {
+                    if (prev[i][0]==''){
+                        for (let y=0; y<5; y++) prev[i][y] = data.currWord[y]; 
+                        setCurrAttempt((prev) => {
+                            return {
+                                attempt: prev.attempt+1, letterPos: 0
+                            }
+                        })
+                        break; 
+                    }
+                }
+                return prev; 
+            })
             setGeneralAttempt((prev) => {
                 return {
                     attempt: prev.attempt+1
@@ -113,7 +127,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             on both sides
             */
             socket.emit('update-attempt', {
-                attempt: generalAttempt.attempt+1, room, username
+                attempt: generalAttempt.attempt+1, room, username, board, currWord
             })
             setGeneralAttempt(prev => {
                 console.log('setGeneralAttempt')
@@ -164,7 +178,7 @@ function Game({username, wordSet, correctWord, socket, setCorrectWord, room}) {
             onSelectLetter, onDelete, onEnter, correctWord, 
             disabledLetters, setDisabledLetters, gameOver, setGameOver}}>
                 <Navbar navbar={navbar}/>
-                <button onClick={()=>console.log(correctWord)}>test</button>
+                <button onClick={()=>console.log(board)}>test</button>
                 <Board /> 
                 {
                     (gameOver.gameOver) ?
