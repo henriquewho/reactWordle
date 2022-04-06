@@ -4,7 +4,9 @@ Link: [https://henriquewho.github.io/reactWordle/](https://henriquewho.github.io
 
 ## Status
 
-In development. 
+In development.  
+Both players will guess on the same word, and the board is being updated with the other player's guess.   
+Still need to adjust some end of game and visual details, as well of some parts of the responsiveness of the page.
 
 ## Idea
 
